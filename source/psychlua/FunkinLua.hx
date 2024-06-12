@@ -49,6 +49,7 @@ class FunkinLua {
 	public var scriptName:String = '';
 	public var modFolder:String = null;
 	public var closed:Bool = false;
+	public static var instance:FunkinLua = null;
 
 	#if HSCRIPT_ALLOWED
 	public var hscript:HScript = null;
