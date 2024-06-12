@@ -38,11 +38,10 @@ class ModchartFuncs
 {
     public static function loadLuaFunctions()
     {
-        #if PSYCH
-        #if LUA_ALLOWED
+        #if (PSYCH && LUA_ALLOWED)
         for (funkin in PlayState.instance.luaArray)
         {
-            #if SScript
+            #if HSCRIPT_ALLOWED
             psychlua.HScript.initHaxeModule(funkin);
             #end
             Lua_helper.add_callback(funkin.lua, 'startMod', function(name:String, modClass:String, type:String = '', pf:Int = -1){
@@ -87,7 +86,7 @@ class ModchartFuncs
             });
         }
         #end
-        #if SScript
+        #if HSCRIPT_ALLOWED
         if (FunkinLua.instance.hscript != null)
         {
             FunkinLua.instance.hscript.variables.set('Math', Math);
@@ -98,11 +97,6 @@ class ModchartFuncs
             FunkinLua.instance.hscript.variables.set('NotePositionData', NotePositionData);
             FunkinLua.instance.hscript.variables.set('ModchartFile', ModchartFile);
         }
-        #end
-
-
-        #elseif LEATHER
-
         #end
     }
 

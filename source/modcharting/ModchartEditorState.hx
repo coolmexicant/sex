@@ -95,7 +95,7 @@ class ModchartEditorEvent extends FlxSprite
         frames = Paths.getSparrowAtlas("ui skins/" + utilities.Options.getData("uiSkin") + "/arrows/default", 'shared');
         animation.addByPrefix('note', 'left0');
         #else
-        frames = Paths.getSparrowAtlas('NOTE_assets');
+        frames = Paths.getSparrowAtlas('noteSkins/NOTE_assets');
         animation.addByPrefix('note', 'purple0');
         #end
         //makeGraphic(48, 48);

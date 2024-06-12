@@ -59,7 +59,6 @@ import psychlua.HScript;
 import tea.SScript;
 #end
 
-import modcharting.ModchartFuncs;
 import modcharting.NoteMovement;
 import modcharting.PlayfieldRenderer;
 
@@ -637,7 +636,6 @@ class PlayState extends MusicBeatState
 
 		resetRPC();
 
-		ModchartFuncs.loadLuaFunctions();
 		callOnScripts('onCreatePost');
 
 		cacheCountdown();
@@ -1673,6 +1671,8 @@ class PlayState extends MusicBeatState
 				openChartEditor();
 			else if (controls.justPressed('debug_2'))
 				openCharacterEditor();
+			else if (controls.justPressed('debug_3'))
+				openModchartEditor();
 		}
 
 		if (healthBar.bounds.max != null && health > healthBar.bounds.max)
@@ -1911,6 +1911,23 @@ class PlayState extends MusicBeatState
 			FlxG.sound.music.stop();
 		#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
 		MusicBeatState.switchState(new CharacterEditorState(SONG.player2));
+	}
+
+	
+	public function openModchartEditor()
+	{
+		if (chartingMode)
+			return false;
+		else
+		{
+			FlxG.camera.followLerp = 0;
+			if (persistentUpdate != false) persistentUpdate = false;
+			if (FlxG.sound.music != null)
+				FlxG.sound.music.stop();
+			#if DISCORD_ALLOWED DiscordClient.resetClientID();#end
+			MusicBeatState.switchState(new modcharting.ModchartEditorState());
+			return true;
+		}
 	}
 
 	public var isDead:Bool = false; //Don't mess with this on Lua!!!
