@@ -59,6 +59,10 @@ import psychlua.HScript;
 import tea.SScript;
 #end
 
+import modcharting.ModchartFuncs;
+import modcharting.NoteMovement;
+import modcharting.PlayfieldRenderer;
+
 /**
  * This is where all the Gameplay stuff happens and is managed
  *
@@ -509,6 +513,9 @@ class PlayState extends MusicBeatState
 
 		generateSong(SONG.song);
 
+		playfieldRenderer = new PlayfieldRenderer(strumLineNotes, notes, this);
+		playfieldRenderer.cameras = [camHUD];
+		add(playfieldRenderer);
 		noteGroup.add(grpNoteSplashes);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
@@ -630,6 +637,7 @@ class PlayState extends MusicBeatState
 
 		resetRPC();
 
+		ModchartFuncs.loadLuaFunctions();
 		callOnScripts('onCreatePost');
 
 		cacheCountdown();
@@ -953,6 +961,7 @@ class PlayState extends MusicBeatState
 
 			generateStaticArrows(0);
 			generateStaticArrows(1);
+			NoteMovement.getDefaultStrumPos(this);
 			for (i in 0...playerStrums.length) {
 				setOnScripts('defaultPlayerStrumX' + i, playerStrums.members[i].x);
 				setOnScripts('defaultPlayerStrumY' + i, playerStrums.members[i].y);
